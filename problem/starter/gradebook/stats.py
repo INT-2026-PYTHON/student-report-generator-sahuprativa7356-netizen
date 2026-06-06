@@ -23,3 +23,7 @@ def passing_students(records: list[dict], threshold: float = 60.0) -> list[str]:
     """Return names whose average >= threshold, sorted alphabetically."""
     # TODO: implement
     pass
+from .data import RECORDS
+from .reports import format_report
+
+__all__ = ["RECORDS", "format_report"]

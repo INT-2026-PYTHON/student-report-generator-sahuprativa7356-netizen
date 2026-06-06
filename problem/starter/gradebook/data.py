@@ -19,3 +19,51 @@ RECORDS: list[dict] = [
     {"name": "Diana",   "subject": "Science", "score": 70},
     {"name": "Diana",   "subject": "English", "score": 65},
 ]
+def average_per_student(records: list[dict]) -> dict[str, float]:
+    """Map each student name to their average score."""
+
+    scores = {}
+
+    for record in records:
+        name = record["name"]
+        score = record["score"]
+
+        scores.setdefault(name, []).append(score)
+
+    averages = {}
+
+    for name, marks in scores.items():
+        averages[name] = round(sum(marks) / len(marks), 2)
+
+    return averages
+
+
+def subjects_offered(records: list[dict]) -> set[str]:
+    """Return unique subjects."""
+
+    return {record["subject"] for record in records}
+
+
+def top_scorer(records: list[dict]) -> tuple[str, float]:
+    """Return (student_name, average_score)."""
+
+    averages = average_per_student(records)
+
+    return max(averages.items(), key=lambda item: item[1])
+
+
+def passing_students(
+    records: list[dict],
+    threshold: float = 60.0
+) -> list[str]:
+    """Return students whose average >= threshold."""
+
+    averages = average_per_student(records)
+
+    passed = [
+        name
+        for name, avg in averages.items()
+        if avg >= threshold
+    ]
+
+    return sorted(passed)
